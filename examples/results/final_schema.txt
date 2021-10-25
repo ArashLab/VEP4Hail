@@ -1,0 +1,90 @@
+struct {
+  variant_class: str,
+  colocated_variants: array <
+    struct {
+      strand: int32,
+      seq_region_name: str,
+      minor_allele: str,
+      end: int32,
+      allele_string: str,
+      start: int32,
+      frequencies: array <
+        struct {
+          allele: str,
+          amr: int32,
+          sas: float32,
+          eas: int32,
+          afr: int32,
+          eur: int32
+        }
+      >,
+      minor_allele_freq: float32,
+      id: str
+    }
+  >,
+  assembly_name: str,
+  start: int32,
+  end: int32,
+  intergenic_consequences: array <
+    struct {
+      consequence_terms: array <
+        str
+      >,
+      variant_allele: str,
+      impact: str
+    }
+  >,
+  allele_string: str,
+  strand: int32,
+  seq_region_name: str,
+  id: str,
+  most_severe_consequence: str,
+  input: str,
+  transcript_consequences: array <
+    struct {
+      strand: int32,
+      variant_allele: str,
+      impact: str,
+      canonical: int32,
+      transcript_id: str,
+      distance: int32,
+      gene_symbol_source: str,
+      source: str,
+      gene_symbol: str,
+      gene_id: str,
+      consequence_terms: array <
+        str
+      >,
+      biotype: str
+    }
+  >,
+  regulatory_feature_consequences: array <
+    struct {
+      variant_allele: str,
+      consequence_terms: array <
+        str
+      >,
+      impact: str,
+      biotype: str,
+      regulatory_feature_id: str
+    }
+  >,
+  motif_feature_consequences: array <
+    struct {
+      motif_score_change: float32,
+      motif_name: str,
+      consequence_terms: array <
+        str
+      >,
+      transcription_factors: array <
+        str
+      >,
+      high_inf_pos: str,
+      variant_allele: str,
+      strand: int32,
+      motif_feature_id: str,
+      motif_pos: int32,
+      impact: str
+    }
+  >
+}
