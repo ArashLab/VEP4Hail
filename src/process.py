@@ -29,7 +29,7 @@ if __name__ == '__main__':
         contents = [json.loads(line) for line in stream]
     corrected = [correct(obj) for obj in contents]
     with bgzf.open(args.corrected, 'w') as stream:
-        json.dump(corrected, stream)
+        stream.write('\n'.join(json.dumps(obj) for obj in corrected))
     merged = merge([to_dtype(obj) for obj in corrected])
     if args.as_string is True:
         with open(args.structure, 'w') as stream:

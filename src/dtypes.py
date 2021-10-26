@@ -15,7 +15,7 @@ dtypes_generalization = {
 
 def to_dtype(obj):
     if isinstance(obj, dict):
-        return {key: to_dtype(value) for key, value in obj.items()}
+        return {key: to_dtype(value) for key, value in obj.items() if value is not None}
     if isinstance(obj, list):
         return [to_dtype(value) for value in obj]
     try:
