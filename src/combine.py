@@ -21,7 +21,7 @@ if __name__ == '__main__':
     matching = [filename for filename in os.listdir(dirpath) if fnmatch.fnmatch(filename, pattern)]
     structures = [load_pickle(os.path.join(dirpath, filename)) for filename in matching]
     unified = [element for li in structures for element in li]  # List of lists to list
-    merged = merge(unified)
+    merged = merge(unified, singleton=True)
     if args.as_pickle is True:
         with open(args.save_to, 'wb') as stream:
             pickle.dump(merged, stream)

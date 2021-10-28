@@ -15,7 +15,7 @@ dtypes_generalization = {
 
 def to_dtype(obj):
     if isinstance(obj, dict):
-        return {key: to_dtype(value) for key, value in obj.items() if value is not None}
+        return {key: to_dtype(value) for key, value in obj.items()}
     if isinstance(obj, list):
         return [to_dtype(value) for value in obj]
     try:
@@ -24,21 +24,23 @@ def to_dtype(obj):
         raise RuntimeError(f'Unknown primitive type: {type(obj)}.')
 
 
-def merge(dtypes):
+def merge(dtypes, singleton=False):
     if isinstance(dtypes, dict):
         return {key: merge(value) for key, value in dtypes.items()}
     if isinstance(dtypes, list):
         if not dtypes:  # Empty
-            return None
+            return None if singleton else []
         if all(isinstance(element, dict) for element in dtypes):
-            # Assuming the same keys have the same data types in all the dictionaries in the list.
             merged = {}
-            for di in dtypes:
-                merged.update(merge(di))
-            return [merged]
+            for key in set(key for di in dtypes for key in di):
+                merged[key] = merge([di[key] for di in dtypes if key in di and di[key] is not None], singleton=True)
+            return merged if singleton else [merged]
+        if all(isinstance(element, list) for element in dtypes):
+            merged = merge([element for sublist in dtypes for element in sublist])
+            return merged if singleton else [merged]
         if all(any(isinstance(element, t) for t in primitive_types) for element in dtypes):
             most_general_dtype, *rest = sorted(dtypes, key=dtypes_generalization.get)
-            return [most_general_dtype]
+            return most_general_dtype if singleton else [most_general_dtype]
         raise RuntimeError(f'Undefined, how to merge {dtypes}?')
     if dtypes in primitive_types.values():
         return dtypes
