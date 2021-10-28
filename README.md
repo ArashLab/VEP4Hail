@@ -72,8 +72,8 @@ In case the annotation results are stored in multiple JSON files, you may proces
 for p in 1..10
 do
     python process.py vep-part${p}.json.bgz corrected-part${p}.json.bgz schema-part${p}.pickle
-    python combine.py "schema-part*.pickle" schema-all.txt
-done 
+done
+python combine.py "schema-part*.pickle" schema-all.txt
 ```
 
 ## Example
